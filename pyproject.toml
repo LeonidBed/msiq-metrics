@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "msiq-metrics"
+version = "0.1.0"
+description = "Moment-based Scale-Invariant Quality metrics for image super-resolution diagnostics"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+  {name = "Leonid Bedratyuk"}
+]
+keywords = ["image-quality", "super-resolution", "moments", "scale-invariant", "image-processing"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = [
+  "numpy>=1.22",
+  "scipy>=1.9",
+  "scikit-image>=0.20",
+]
+
+[project.optional-dependencies]
+cv = ["opencv-python>=4.8"]
+viz = ["matplotlib>=3.6"]
+dev = [
+  "pytest>=7.0",
+  "build>=1.0",
+  "twine>=5.0",
+  "matplotlib>=3.6",
+  "opencv-python>=4.8",
+]
+
+[project.urls]
+Homepage = "https://github.com/YOUR_USERNAME/msiq-metrics"
+Repository = "https://github.com/YOUR_USERNAME/msiq-metrics"
+Issues = "https://github.com/YOUR_USERNAME/msiq-metrics/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["msiq*"]
