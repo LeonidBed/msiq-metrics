@@ -112,6 +112,66 @@ rows = scale_robustness_test(
 
 This diagnostic is useful because normalized moments are exactly scale-invariant in the continuous setting, while every discrete implementation is only an approximation.
 
+## Important note on OpenCV preprocessing
+
+When MSIQ is computed for images produced by OpenCV transformations such as
+`cv2.resize`, `cv2.warpAffine`, or `cv2.warpPerspective`, the resulting image
+should be explicitly converted back to the valid intensity range `[0, 1]`.
+
+This is especially important when floating-point images are used. Some OpenCV
+interpolation methods, in particular cubic interpolation, may produce values
+slightly below `0` or above `1`. For moment-based descriptors this may lead to
+unstable normalized moments and, consequently, to artificially large MSIQ
+values.
+
+A safe preprocessing function is recommended:
+
+```python
+    import numpy as np
+
+    def safe01(img):
+        img = np.asarray(img, dtype=np.float64)
+        img = np.clip(img, 0.0, 1.0)
+        return np.ascontiguousarray(img)
+```
+Example usage:
+ ```python
+
+    scaled = cv2.resize(
+        img,
+        (new_w, new_h),
+        interpolation=cv2.INTER_CUBIC
+    )
+    scaled = safe01(scaled)
+
+    rotated = cv2.warpAffine(
+        img,
+        M,
+        (W, H),
+        flags=cv2.INTER_CUBIC
+    )
+    rotated = safe01(rotated)
+```
+Also note that the weighted version of MSIQ must be called with an explicit
+weighting scheme. To reproduce the inverse-order weighting used in the paper,
+use:
+
+```python
+    score_w = msiq(
+        reference,
+        test,
+        order=4,
+        channel_mode="gray",
+        distance="weighted",
+        weighting="inverse_order",
+        region="triangular",
+        include_trivial=False,
+    )
+```
+If `distance="weighted"` is used without explicitly setting
+`weighting="inverse_order"`, the result may not correspond to the weighted MSIQ
+protocol described in the paper.
+
 ## Citation
 
 A formal citation will be added after the corresponding paper is published.
