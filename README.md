@@ -12,7 +12,7 @@ For local development:
 pip install -e .
 ```
 
-After publication on PyPI:
+The package can be installed via:
 
 ```bash
 pip install msiq-metrics
