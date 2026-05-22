@@ -172,6 +172,10 @@ If `distance="weighted"` is used without explicitly setting
 `weighting="inverse_order"`, the result may not correspond to the weighted MSIQ
 protocol described in the paper.
 
+## AI-assisted development
+
+ChatGPT by OpenAI was used as an AI-assisted tool for language editing, code prototyping, debugging assistance, and experimental planning. The author reviewed and validated all code, results, and manuscript content.
+
 ## Citation
 
 A formal citation will be added after the corresponding paper is published.
